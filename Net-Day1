@@ -191,4 +191,18 @@ UDP HEADER STRUCTURE (OSI LAYER 4 - TRANSPORT):
   DEST PORT     16-31     16              SPECIFIES THE PORT ON THE RECEIVING(DESTINATION) HOST THAT IT IS LISTENING ON FOR THIS COMMUNICATION.
   LENGTH        32-47     16              SPECIFIES THE LENGTH OF THE UDP HEADER AND DATA.
   CHECKSUM      48-63     16              USED FOR ERROR CHECKING OF THE HEADER AND DATA. THIS IS OPTIONAL FOR IPV4 AND MANDATORY IN IPV6.
+
+NETWORK TRAFFIC SNIFFING NOTES
+  MADE POSSIBLE BY libpcap, winpcap (DEPRICATED), npcap
+  BERKELEY PACKET FILTERS:
+    tcpdump {A} [B:C] {D} {E} {F} {G}
+    A = PROTOCOL (ether | arp | ip | ip6 | icmp | tcp | udp)
+    B = HEADER BYTE OFFSET
+    C = OPTIONAL BYTE LENGTH. CAN BE 1,2,4 (default 1)
+    D = OPTIONAL: BITWISE MASK (&)
+    E = OPERATOR (= | == | > | < | <= | >= | != | () | << | >>)
+    F = RESULT OF EXPRESSION
+    G = OPTIONAL: LOGICAL OPERATOR (&& ||) TO BRIDGE EXPRESSIONS
+    tcpdump 'ether[12:2] = 0x0800 && (tcp[2:2] != 22 || tcp[2:2] != 23)'
+    EXAMPLE: udp[0:2] = 53 || udp[2:2] = 53 RETURNS ALL UDP PACKETS WITH EITHER A DESTINATION OR SOURCE PORT OF 53, AS IT ITERATES STARTING FROM THE 0TH BITVALUE TO TWO BYTES AHEAD
 ------------------------------------------------------------------------------------------------------------------------
