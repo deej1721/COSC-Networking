@@ -218,4 +218,9 @@ NETWORK TRAFFIC SNIFFING NOTES
     ip[12:4]&0xFFFFFFF = 0xC0A80E02 MATCHES SOURCE IP 192.168.14.2
     CONVERT IP TO HEX VIA https://www.browserling.com/tools/ip-to-hex
     ip[12:4]&0xFFFFF00 = 0xC0A80E00 MATCHES SOURCE IP RANGE 192.168.14.0/24
+  SWITCH OPERATION:
+    FAST FORWARD - ONLY DEST MAC
+    FRAGMENT FREE - FIRST 64 BYTES
+    STORE AND FORWARD ENTIRE FRAME AND FCS
+    
 ------------------------------------------------------------------------------------------------------------------------
