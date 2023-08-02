@@ -27,4 +27,18 @@ CONSULT MODULE NETWORK MAP:
   -ENUMERATION OCCURS IN RED SPACE
 ------------------------------------------------------------------------------------------------------------------------
 NETWORKING FUN(DAMENTALS) NOTES
+RECALL BINARY BASICS (NUMBER LINE METHOD)
+  DECIMAL VALUE... 8 4 2 1
+  BINARY VALUE...  0 1 1 1
+  THUS, BINARY 0111 = DECIMAL 7 
+RECALL HEX BASICS (BASE 16, 0-15)
+  DEC VALUE: 15
+  HEX VALUE: F
+BINARY IDENTIFICATION:
+  1 bit...     1/8 a byte
+  1 nibble...  4 bits OR half a byte
+  1 byte...    8 bits
+  half word... 16 bits OR 2 bytes
+  word...      32 bits OR 4 bytes
+
 ------------------------------------------------------------------------------------------------------------------------
