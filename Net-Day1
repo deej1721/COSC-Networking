@@ -1,0 +1,30 @@
+------------------------------------------------------------------------------------------------------------------------
+COSC NETWORKING DAY 1 GENERAL LINKS
+RECOMMENDED RESOURCE: MIRO WHITEBOARD: https://miro.com/app/board/o9J_klSqCSY=/
+NETWORKING GUIDE: https://net.cybbh.io/public/networking/latest/index.html
+CTFD-2: ( THE SERVER WE USE )
+  URL: http://networking-ctfd-2.server.vta:8000/
+  IP: http://10.50.23.147:8000/
+Practice Server
+  URL: http://networking-practice-ctfd.server.vta:8000/
+  IP: http://10.50.21.30:8000/
+STUDENT ANTORA: https://cctc.cybbh.io/students/students/latest/index.html
+PUTTY DOWNLOAD: https://www.putty.org/
+WSL2: https://docs.microsoft.com/en-us/windows/wsl/install-win10
+XMING:
+  DOWNLOAD: http://www.geo.mtu.edu/geoschem/docs/putty_install.html
+  NOTES: http://www.straightrunning.com/XmingNotes/
+PACKET CAPTURE LINKS:
+  https://packetlife.net/captures/
+  https://wiki.wireshark.org/SampleCaptures
+  https://github.com/chrissanders/packets
+  https://www.cloudshark.org/collections/_7QxUxkDFulYsJ_ZI_0xHg
+LINUX FILE PERM INFO:https://onedrive.live.com/view.aspx?resid=2F6F542CFFBDFABC!28524&ithint=file%2cxlsx&authkey=!AA2N-oRQQLqoSGQ
+------------------------------------------------------------------------------------------------------------------------
+DAY 1 MODULE NOTES
+CONSULT MODULE NETWORK MAP:
+  -INTERACTION AND COMMS OCCUR ON BLUE SPACE FIRST
+  -ENUMERATION OCCURS IN RED SPACE
+------------------------------------------------------------------------------------------------------------------------
+NETWORKING FUN(DAMENTALS) NOTES
+------------------------------------------------------------------------------------------------------------------------
