@@ -213,4 +213,9 @@ NETWORK TRAFFIC SNIFFING NOTES
     LEAST EXCLUSIVE: tcp[13] & 0x11 !=0 
     https://net.cybbh.io/public/networking/latest/lesson-1-fundamentals/fg.html#_2_4_message_formatting_method (SEARCH BY FILTER LOGIC)
     !!!FILTER LOGIC ACCEPTS DECIMAL VALUES! JUST FUCKING USE THOSE!!!
+    tcp[13]& 0x12 != 0 CATCHES THREE-WAY HANDSHAKES
+    192.168.14.2
+    ip[12:4]&0xFFFFFFF = 0xC0A80E02 MATCHES SOURCE IP 192.168.14.2
+    CONVERT IP TO HEX VIA https://www.browserling.com/tools/ip-to-hex
+    ip[12:4]&0xFFFFF00 = 0xC0A80E00 MATCHES SOURCE IP RANGE 192.168.14.0/24
 ------------------------------------------------------------------------------------------------------------------------
