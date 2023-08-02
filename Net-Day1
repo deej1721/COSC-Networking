@@ -205,4 +205,11 @@ NETWORK TRAFFIC SNIFFING NOTES
     G = OPTIONAL: LOGICAL OPERATOR (&& ||) TO BRIDGE EXPRESSIONS
     tcpdump 'ether[12:2] = 0x0800 && (tcp[2:2] != 22 || tcp[2:2] != 23)'
     EXAMPLE: udp[0:2] = 53 || udp[2:2] = 53 RETURNS ALL UDP PACKETS WITH EITHER A DESTINATION OR SOURCE PORT OF 53, AS IT ITERATES STARTING FROM THE 0TH BITVALUE TO TWO BYTES AHEAD
+  BITWISE MASKING:
+    FILTERING DOWN TO THE BIT RATHER THAN BYTE LEVEL, FINER-TOOTHED COMB
+    ip[0] & 0x0F > 0x05 (ONLY CARES ABOUT SECOND NIBBLE, MASK OF 00001111
+    MOST EXCLUSIVE:  tcp[13] = 0x11 (ALL BITS MUST MATCH)
+    LESS EXCLUSIVE:  tcp[13] & 0x11 = 0x11  
+    LEAST EXCLUSIVE: tcp[13] & 0x11 !=0 
+    https://net.cybbh.io/public/networking/latest/lesson-1-fundamentals/fg.html#_2_4_message_formatting_method (SEARCH BY FILTER LOGIC)
 ------------------------------------------------------------------------------------------------------------------------
