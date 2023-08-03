@@ -1,0 +1,457 @@
+------------------------------------------------------------------------------------------------------------------------
+GENERAL CTFD NOTES
+  DATA-505-M USERNAME AND PASSWORD
+  OBJECTIVES UNDER RESOURCES TAB CAN BE USED AS CONTINUING EDUCATION FOR NET+
+  IGNORE CYBERCHEF LINK
+  Internet Host Creds
+  Hostname: INTERNET_HOST
+  Student#: student17
+  Command: ssh student@10.50.30.2 -X
+  Password: password
+  README FROM HOME DIR:
+# ---- WELCOME TO CCTC NETWORKING ---- #
+The map of the environment has been provided in your home directory:
+    student_net_range_blue_only.pn
+All activity PCAPS are provided here:
+    /home/activity_resources/pcaps 
+Below are a series of useful commands installed on this Internet_Host to use while you are in this course.
+    1. To view your IP address and interface information:
+        a. current =        ip address (ip addr)
+        b. deprecated =     ifconfig
+    2. To view your ARP cache:
+        a. current =        ip neighbor (ip nei)
+        b. deprecated =     arp -a
+    3. To view open TCP and UDP sockets:
+        a. current = 
+            i. TCP =        ss -antlp
+            ii. UDP =       ss -anulp
+        b. deprecated =     netstat
+    4. To view active processes:
+        a. static =         ps -elf
+        b. real-time =      top or htop
+    5. To open file manager from the command line or X11 connection:
+        a. nautilus
+        b. pcmanfm
+    6. Web Browsers:
+        a. Firefox
+        b. Chromium
+        c. Konqueror
+    7. To open images from the command line or X11 connection:
+        a. Eye of Gnome =                   eog [file]
+        b. Nomacs =                         nomacs [file]
+        c. Eye of Mate =                    eom [file]
+        d. GNU Image Manipulation Program = gimp [file]
+    8. Network scanning:
+        a. nmap
+            -sT = TCP Full connection
+            -sS = TCP SYN scanning
+            -Pn = Disable ping sweep
+            -sU = UDP scanning
+        b. zenmap
+        c. netcat
+            TCP: nc -nzvw1 10.10.0.40 21-23 80
+            UDP: nc -unzvw1 10.10.0.40 53 69
+        d. ping
+        e. traceroute
+    9. Network Utilization:
+        a. iftop
+        b. iptraf-ng
+    10. Packet Manipulation (requires root privileges):
+        a. scapy
+        b. hping3
+        c. yersinia     yersinia -G
+    11. Packet Sniffing (requires root privileges):
+        a. Wireshark
+        b. tcpdump
+        c. p0f
+        d. tshark
+    12. Banner Grabbing:
+        a. netcat
+            Client: nc 10.10.0.40 22
+            Listener: nc -lvp 1234
+        b. telnet
+            telnet 10.10.0.40
+        c. wget
+            wget -r http://10.10.0.40
+            wget -r ftp://10.10.0.40
+        d. curl
+            curl http://10.10.0.40
+            curl ftp://10.10.0.40
+    13. DNS Query:
+        a. whois
+        b. dig
+            Records:
+                A - IPv4
+                AAAA - IPv6
+                NS - Name Server
+                SOA - Start of Authority
+                MX - Mail Server
+                TXT - Human readable message
+    14. Remote access:
+        a. ssh
+            ssh student@10.10.0.40
+            ssh student@10.10.0.40 -p 2222
+        b. telnet
+            telnet 10.10.0.40
+            telnet 10.10.0.40 23
+    15. File Transfer:
+        a. scp
+            scp student@10.10.0.40:file .
+            scp file student@10.10.0.40:
+        b. netcat
+            nc 10.10.0.40 1234 < file
+            nc -lvp 1234 > file
+------------------------------------------------------------------------------------------------------------------------
+CTFD CHALLENGES - Networking - 1 - Fundamentals 
+Gorgas Network Validation (GNV)
+XX OCT 2023
+Start Time: ~1300
+Duration: 4 hour
+Type of Operation: Network & Protocol familiarization, Custom Packet Creation & Manipulation
+Objective: Identify and Validate the methods of encapsulation, header manipulation, packet traversal, and header structure in order to assist Gorgan Cyber Forces. 
+Craft Custom ARP Requests and obfuscated ICMPv6 packets to enable Gorgas Cyber Forces to perform effective host discovery and Manipulation. 
+You will use scapy and leverage ARP functions to manually "discover" your windows host, as a valid test case to provide to their cyber forces. 
+You will use scapy and leverage IPv6 auto configuration functions to create a means of IPv6 direct communications between the Linux and Windows Machine.
+Scenario Credentials: NETWORK FUNDAMENTALS - START FLAG = N3tw0rkFund3m3nt@ls
+  Networking - 1 - Fundamentals - Task 1 - Frame and Packet Headers
+  Frame and Packet Headers
+  Type of Operation: PCAP Traffic Analysis
+  Objective: In support of the Gorgas Cyberspace Defense Operations, the team have captured packets over a network backbone with suspicious traffic. The pcap was pruned for most benign traffic. The PCAP is sent to you for further analysis.
+  PCAP is stored on T1, located at /home/activity_resources/pcaps/packet-headers.pcapng.
+  START FLAG = {provided in notification}
+  2. ARP – 1 5
+  What is the MAC of 10.10.10.1?
+  ANSWER: 00:1d:09:f0:92:ab VIA ip.addr=<IP>
+  3. ARP – 2 5
+  What is the MAC of 10.10.10.2?
+  ANSWER: 00:1a:6b:6c:0c:cc VIA ip.addr=<IP>
+  4. ARP – 3 5
+  What is the MAC address of the system trying to perform the ARP MitM attack?
+  ANSWER: 
+  5. RARP – 1 5
+  What is the OP code of a RARP Request?
+  ANSWER: 3
+  6. RARP – 2 5
+  What is the OP code of a RARP Response?
+  ANSWER: 4
+  7. RARP – 3 5
+  What is the RARP requestor’s MAC?
+  ANSWER: 00:0c:29:34:0b:de VIA arp, SEARCH FOR RARP
+  8. RARP – 4 5
+  What was the RARP requestor’s resolved IP address?
+  ANSWER: 10.1.1.100 VIA eth.addr==00:0c:29:34:0b:de
+  9. Gratuitous ARP – 1 5
+  What is the MAC of the system spamming gratuitous ARP’s for 192.168.1.254?
+  ANSWER: 00:00:5e:00:01:01
+  12. LLDP – 1 5
+  What is the System Name of one of the LLDP sending devices?
+  ANSWER: 
+  13. STP – 1 5
+  What is the Bridge Priority of the STP Root Bridge?
+  ANSWER: 0
+  14. STP – 2 5
+  What is the MAC address of the STP Root Bridge?
+  ANSWER: Root Identifier: 0 / 0 / 00:1f:27:b4:7d:80
+  15. VTP – 1 5
+  What is the VTP Management Domain Name?
+  ANSWER: cisco VIA VTP
+  16. VTP – 2 5
+  What is the latest configuration revision number?
+  ANSWER: 11 VIA vtp
+  17. VTP – 3 5
+  How many total VLANs are being advertised via VTP?
+  ANSWER: 22 VIA vtp, COUNT VLAN INFO SPOTS
+  18. VLAN – 1 5
+  What is the message contained within the single tagged VLAN traffic coming from 11.22.33.44?
+  ANSWER: I pitty the foo VIA ip.src==11.22.33.44
+  19. VLAN – 2 5
+  What is the VLAN ID of this traffic?
+  ANSWER: 999 VIA ip.src==11.22.33.44
+  20. VLAN Hopping – 1 5
+  What is the VLAN ID being attacked by 10.10.10.10 using Double Tagging?
+  ANSWER: 250 VIA ip.src==10.10.10.10, THEN ip.dst==11.11.11.11
+  21. VLAN Hopping – 2 5
+  What is the combined message being sent via ICMP?
+  ANSWER: Wouldn't you like too be a pepper too! VIA ip.src==10.10.10.10
+  22. ICMP – 1 5
+  What is the OS of 192.168.1.1 host based off its Echo Request message to the Google DNS?
+  ANSWER: linux
+  23. ICMP – 2 5
+  What is the message that 192.168.65.20 sending to Google's DNS via ICMP?
+  ANSWER: Exsqueeze me? VIA ip.dst==192.168.65.20 and icmp
+  24. ICMP – 3 5
+  How many Hops away is the 151.101.64.84 address?
+  ANSWER: 11 VIA ip.src==151.101.64.84, ttl=53, 64-53=11
+  27. Fragmented – 3 5
+  What is the possible OS of the system that sent this ICMP based on the message payload?
+  ANSWER: windows
+  28. ICMPv6 – 1 5
+  What is the ICMPv6 type number of Echo Request?
+  ANSWER: 128
+  29. ICMPv6 – 2 5
+  What is the ICMPv6 type number of Echo Reply?
+  ANSWER: 129
+  30. ICMPv6 – 3 5
+  What is the ICMPv6 type number of the Router Advertisement message?
+  ANSWER: 134
+  31. ICMPv6 – 4 5
+  What is the link-layer address of the advertising router?
+  ANSWER: 
+  33. HSRP – 1 5
+  What is the HSRP virtual IP?
+  ANSWER: 192.168.0.1 VIA hsrp, SEARCH FOR COUP
+  34. HSRP – 2 5
+  What is the HSRP multicast address used?
+  ANSWER: 224.0.0.2 VIA hsrp, LOOK FOR WHAT EVERYBODY'S SENDING SHIT TO
+  35. HSRP – 3 5
+  What is the IP address of the HSRP Active forwarder (before the takeover)?
+  ANSWER: 192.168.0.30 VIA hsrp, LOOK FOR HELLO (STATE ACTIVE)
+  36. HSRP – 4 5
+  What is the IP address of the HSRP Active forwarder (after the takeover)?
+  ANSWER: 192.168.0.10 VIA hsrp, LOOK FOR HELLO (STATE ACTIVE)
+  37. VRRP – 1 5
+  What is the VRRP multicast address used?
+  ANSWER: 224.0.0.18 VIA vrrp, LOOK FOR WHAT EVERYBODY'S SENDING SHIT TO
+  38. VRRP – 2 5
+  What is the VRRP virtual IP?
+  ANSWER: 192.168.1.254 VIA vrrp, EXPAND PACKET PROPERTIES
+  39. VRRP – 3 5
+  How many total devices are communicating via VRRP?
+  ANSWER: 3 VIA vrrp, COUNT THE IPs
+  40. RIP – 1 5
+  How many networks are being advertised via RIP?
+  ANSWER: 2, COUNT THE IPs
+  41. RIP – 2 5
+  What are the networks being advertised (in numeric order separated by commas and no spaces)? (i.e. 1.0.0.0,2.0.0.0 )
+  ANSWER: 200.0.1.0,200.0.2.0
+  42. RIP – 3 5
+  What Protocol and port is being used for RIP?
+  ANSWER: UDP 520
+  43. EIGRPv4 – 1 5
+  What network is being advertised via EIGRPv4
+  ANSWER: 
+Transport PROTOCOL PORT
+  49. OSPF – 1 5
+  What is the IP protocol number used for OSPF?
+  ANSWER: 89
+  50. OSPF – 2 5
+  What is the IP address of the OSPF designated router (DR)?
+  ANSWER: 192.168.170.8
+  51. OSPF – 3 5
+  What multicast address is used by the DR to send updates?
+  ANSWER: 224.0.0.5
+  52. BGP – 1 5
+  How many networks are being advertised via BGP?
+  ANSWER: 3
+  53. BGP – 2 5
+  
+What are the networks being advertised (in numeric order separated by commas and no spaces)?
+  ------------------
+  Networking - 1 - Fundamentals - Task 2 - Packet Payloads
+  Packet Payloads
+  Type of Operation: PCAP Traffic Analysis
+  Objective: In support of the Gorgas Cyberspace Defense Operations, the team have captured packets over a network backbone with suspicious traffic. The pcap was pruned for most benign traffic. The PCAP is sent to you for further analysis.
+  PCAP is stored on T1, located at /home/activity_resources/pcaps/packet-headers.pcapng.
+  START FLAG = {provided in notification}
+  1. SMB – 1 5
+  What Protocol and port is being used for SMB? PROTOCOL PORT
+  ANSWER: TCP 445
+  2. SMB – 2 5
+  What is the name of the file accessed via SMB? Follow the stream
+  ANSWER: putty.exe VIA smb
+  3. DHCP – 1 5
+  What is the IP address of the DHCP server?
+  ANSWER: 192.168.0.1 VIA dhcp, THE SOURCE
+  4. DHCP – 2 5
+  What is the “offered” IP address?
+  ANSWER: 192.168.0.10 VIA dhcp, THE DESTINATION
+  5. DHCP – 3 5
+  What is the DHCP lease time (in seconds)?
+  ANSWER: 
+  6. DNS – 1 5
+  What ".com" webpage was the “A” record requested for?
+  ANSWER: microsoft.com VIA dns, SEARCH FOR "A"
+  7. DNS – 2 5
+  What webpage was the “AAAA” record requested for?
+  ANSWER: wikipedia.org VIA dns, SEARCH FOR "AAAA"
+  8. DNS – 3 5
+  What mail server was the “MX” record requested for?
+  ANSWER: hotmail.com VIA dns, SEARCH FOR "MX"
+  9. DNS – 4 5
+  What domain was the Zone transfer requested for?
+  ANSWER: 
+  10. FTP – 1 5
+  What is the username/password used for the FTP authentication?
+  ANSWER: student10/password10 VIA ftp, SEARCH FOR REQUESTS WITH USER/PASSWORD STRINGS 
+  11. FTP – 2 5
+  What was the filename requested via FTP?
+  ANSWER: DO_NOT_LOOK.txt VIA ftp, SEARCH FOR RETR WITH A FILENAME INSIDE
+  12. FTP – 3 5
+  What was the message in the file transferred via FTP?
+  ANSWER: 
+  14. HTTP – 1 5
+  What was the HTTP site reached (without any errors or redirects)?
+  ANSWER: 
+  15. HTTP – 2 5
+  What was the HTTP site that was “Moved Temporarily”?
+  ANSWER: snippets.cdn.mozilla.net VIA http, SEARCH FOR Moved Temporarily AND THEN EXPAND HTTP DETAILS OF PACKET
+  16. HTTP – 3 5
+  What was the HTTP site that was “Moved Permanently”?
+  ANSWER: msn.com VIA http, SEARCH FOR Moved Permanently AND THEN EXPAND HTTP DETAILS OF PACKET
+  17. HTTP – 4 5
+  What was the HTTPs (TLS) site that was reached?
+  ANSWER: twitter.com VIA tcp.port==443 and ip contains "http"
+  18. SMTP – 1 5
+  What is the SMTP domain name? (i.e. domain.com )
+  ANSWER: virginmedia.com, SEARCH FOR EHLO
+  19. SMTP – 2 5
+  Who sent the email to (cuizw@public.qd.sd.cn)?
+  ANSWER: owadomyi2897@virginmedia.com VIA smtp, SEARCH FOR THE SPECIFIED EMAIL AND FOLLOW TCP STREAM
+  20. SMTP – 3 5
+  From the message, what are “self-explanatory”?
+  ANSWER: sizes VIA smtp, SEARCH FOR THE SPECIFIED EMAIL ABOVE AND FOLLOW TCP STREAM
+  21. SMTP – 4 5
+  What is the name of the SMTP server communicating over IPv6?
+  ANSWER: mx.google.com VIA smtp and ipv6
+  22. IMAP – 1 5
+  What is the username that signed-in via IMAP?
+  ANSWER: neulingern VIA imap, SEARCH FOR REQUEST: LOGIN
+  23. IMAP – 2 5
+  How many emails were “fetched”?
+  ANSWER: 13 via imap, FOLLOW TCP STREAM AFTER LOGIN AND SEARCH FOR # EXISTS
+  24. IMAP – 3 5
+  Who is “reporting a similar situation” via the emails?
+  ANSWER: Jerry Hammons VIA imap, FOLLOW TCP STREAM AFTER LOGIN AND CTRL + F SEARCH FOR "REPORTING"
+  25. POP – 1 5
+  What is the POP mailbox address?
+  ANSWER: digitalinvestigator@networksims.com VIA pop, FOLLOW TCP STREAM
+  26. POP – 2 5
+  How many messages does this mailbox have?
+  ANSWER: 3 VIA pop, FOLLOW TCP STREAM
+  27. POP – 3 5
+  What is the name of the University in one of the email messages?
+  ANSWER: Edinburgh Napier VIA pop, FOLLOW TCP STREAM AND CTRL + F SEARCH FOR "UNIV"
+  28. NTP – 1 5
+  What is the IP of the NTP server?
+  ANSWER: 192.168.50.50 VIA ntp, SEARCH FOR "symmetric active"
+  29. NTP – 2 5
+  What is the Timestamp in the NTP messages (MON DAY, YEAR)?
+  ANSWER: SEP 27, 2004 VIA ntp, EXPAND NTP PACKET PROPERTIES
+  30. NTP – 3 5
+  What is the NTP version number?
+  ANSWER: 3 VIA ntp, EXPAND NTP PACKET PROPERTIES
+  31. SSH – 1 5
+  What is the SSH server IP address?
+  ANSWER: 172.16.40.10 VIA ssh, SEARCH FOR "Server"
+  32. SSH – 2 5
+  What is the SSH protocol version being used by both (copy entire field “as is” from Wireshark)?
+  ANSWER: SSH-2.0-OpenSSH_7.9p1 Debian-10+deb10u2 VIA ssh, SEARCH FOR "Server|Client Protocol" AND EXPAND SSH PACKET PROPERTIES
+  33. SSH – 3 5
+  Which asymmetric encryption protocol is being used?
+  ANSWER: 
+  34. SSH – 4 5
+  What is the MSS option set to for the SSH communication? MSS can be found in the SYN exchange.
+  ANSWER: 
+  36. TELNET – 1 5
+  What is the username/password of the account used via telnet?
+  ANSWER: fake/user VIA telnet, FOLLOW TCP STREAM
+  37. TELNET – 2 5
+  What is the exact first command issued on the remote system over telnet?
+  ANSWER: /sbin/ping www.yahoo.com VIA telnet, FOLLOW TCP STREAM
+  38. TELNET – 3 5
+  What was the second command issued?
+  ANSWER: ls VIA telnet, FOLLOW TCP STREAM
+  39. TELNET – 4 5
+  What is the inital sequence number of the client? suggest to convert the Hexdump to Decimal
+  ANSWER: 
+  41. RADIUS – 1 5
+  What was the username used to log in via RADIUS
+  ANSWER: John.McGuirkO VIA radius, FOLLOW UDP STREAM
+  42. RADIUS – 2 5
+  What is the RADIUS Request code?
+  ANSWER: 1 VIA radius, EXPAND PACKET PROPERTIES
+  43. RADIUS – 3 5
+  What is the RADIUS Accept code?
+  ANSWER: 2 VIA radius, EXPAND PACKET PROPERTIES
+  44. RADIUS – 4 5
+  What is the RADIUS Challenge code?
+  ANSWER: 11 VIA radius, EXPAND PACKET PROPERTIES
+  45. TACACS+ – 1 5
+  What is the IP of the TACACS+ server?
+  ANSWER: 192.168.1.5 VIA tacplus
+  46. TACACS+ – 2 5
+  What is the Source port used for the communication?
+  ANSWER: 59087 VIA tacplus, EXPAND PACKET PROPERTIES
+  47. TACACS+ – 3 5
+  What is the Maximum Segment Size (MSS) option set to for the TACACS+ communication?
+  ANSWER: 
+  48. TACACS+ – 4 5
+  What is the starting window size of the TACACS+ client?
+  ANSWER: 4128 VIA tacplus, EXPAND PACKET PROPERTIES
+  49. SNMP – 1 5
+  What SNMP version is being used?
+  ANSWER: 3 VIA snmp, EXPAND PACKET PROPERTIES
+  50. SNMP – 2 5
+  What is the IPv4 address of the SNMP server? It will be the system doing the get-request
+  ANSWER: 10.0.0.150 VIA snmp
+  51. SNMP – 3 5
+  What is the IPv6 address of the SNMP server? It will be the system doing the get-request
+  ANSWER: 2001:470:e5bf:1001:1cc7:73ff:65f5:a2f7
+  52. SNMP – 4 5
+  What Protocol and port is being used for SNMP communication?  PROTOCOL PORT
+  ANSWER: UDP 161 VIA snmp, EXPAND PACKET PROPERTIES
+  53. TFTP – 1 5
+  What is the IP address of the TFTP server?
+  ANSWER: 192.168.0.13 VIA tftp
+  54. TFTP – 2 5
+  What is the name of the file uploaded to the TFTP server?
+  ANSWER: rfc1350.txt VIA export objects
+  55. TFTP – 3 5
+  How many TFTP “Blocks” were used to send the file?
+  ANSWER: 49 VIA tftp, FIND LAST DATA PACKET BLOCK
+  ------------------
+  Networking - 1 - Fundamentals - Task 3 - Basic Analysis
+  Basic Analysis - Utilizing Berkeley Packet Filters
+  Type of Operation: PCAP Examination
+  Objective: You have been given a pcap of unknown contents for examination. You are tasked with performing basic analysis of the contents of this pcap using Berkeley Packet Filters (BPF).
+  PCAP is stored on T1, located at /home/activity_resources/pcaps/BPFCheck.pcap.
+  START FLAG = {provided in notification}
+  Basic Analysis - TELNET 5
+  What is the Berkeley Packet Filter, using tcpdump, to capture all telnet traffic?
+  ANSWER: tcp[0:2] = 23 || tcp[2:2] = 23
+  Basic Analysis - HTTP 5
+  What is the Berkeley Packet Filter, using tcpdump, to capture all HTTP traffic?
+  ANSWER: tcp[0:2]=80||tcp[2:2]=80
+  Basic Analysis - high port 5 Level I Challenge
+  What is the Berkeley Packet Filter, using tcpdump, to capture traffic with a Source Port higher than 1024, utilizing the correct Transport Layer Headers?
+  ANSWER: tcp[0:2]>1024||udp[0:2]>1024
+  Basic Analysis - id 5 Level I Challenge
+  What is the Berkeley Packet Filter, using tcpdump, to capture all packets with an IP ID field of 213?
+  ANSWER: ip[4:2]=213
+  Basic Analysis - WELL KNOWN PORTS 5
+  What is the Berkeley Packet Filter, using tcpdump, to capture all TCP and UDP packets sent to the well known ports?
+  ANSWER: tcp[2:2]<1024||udp[2:2]<1024
+  Basic Analysis - ttl 5 Level I Challenge
+  What is the Berkeley Packet Filter, using tcpdump, to capture all packets with a ttl of 64 and less, utilizing the IPv4 or IPv6 Headers?
+  ANSWER: ip[8:1]<65||ip6[7:1]<65
+  Basic Analysis - tcp flags  Level I Challenge
+  What is the Berkeley Packet Filter, using tcpdump, to capture only packets with the ACK/RST or ACK/FIN flag set, utilizing the correct Transport Layer Header?
+  ANSWER: tcp[13]=17||tcp[13]=20
+  Basic Analysis - CLIENT CONNECTIONS 5
+  What is the Berkeley Packet Filter, using tcpdump, to capture the initial packets from a client trying to initiate a TCP connection? 
+  ANSWER: tcp[13]=2
+  Basic Analysis - dns 5
+  What is the Berkeley Packet Filter, using tcpdump, to capture all IPv4 packets relating to DNS?
+  ANSWER: udp[0:2] = 53 || udp[2:2] = 53 || tcp[0:2] = 53 || tcp[2:2] = 53
+  tcp[13]=2
+  Basic Analysis - CLOSED PORTS 5
+  What is the Berkeley Packet Filter, using tcpdump, to capture the response packets from a server with closed TCP ports There should be 17 packets
+  ANSWER: tcp[13]=4
+  Basic Analysis - OPEN PORTS 5
+  What is the Berkeley Packet Filter, using tcpdump, to capture the response packets from a server listening on an open TCP ports?
+  ANSWER: tcp[13]=18
+  ------------------
+tcp[0:2]=80||tcp[2:2]=80
+tcp[0:2]=80||tcp[2:2]=80||tcp[0:2]=80||tcp[2:2]=80
+
+------------------------------------------------------------------------------------------------------------------------
