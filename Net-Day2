@@ -450,8 +450,16 @@ What are the networks being advertised (in numeric order separated by commas and
   Basic Analysis - OPEN PORTS 5
   What is the Berkeley Packet Filter, using tcpdump, to capture the response packets from a server listening on an open TCP ports?
   ANSWER: tcp[13]=18
+  Basic Analysis - URGent EXFIL 10
+  What is the Berkeley Packet Filter, using tcpdump, to capture all packets where the URG flag is not set and URG pointer has a value?
+  ANSWER:tcp[13]&32=0&&tcp[18:2]>0
+  Basic Analysis - dscp 10
+  Level I Challenge
+  What is the Berkeley Packet Filter, using tcpdump, to capture all IPv4 packets with the DSCP field of 37?
+  ANSWER: ip[1]>>2=37
   ------------------
 tcp[0:2]=80||tcp[2:2]=80
 tcp[0:2]=80||tcp[2:2]=80||tcp[0:2]=80||tcp[2:2]=80
-
+Nightcall - Kavinsky
+ip[8]=0x01&&(ip[9]=0x01||ip[9]=0x11)
 ------------------------------------------------------------------------------------------------------------------------
