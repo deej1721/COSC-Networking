@@ -148,4 +148,79 @@ REQUIREMENTS:
     - MUST INCLUDE IP AND FOLLOW ON HEADERS
     - REQUIRES GUIDANCE FROM "REQUEST FOR COMMENTS" RFC TO FOLLOW HEADER STRUCTURE PROPERLY (SEE RFC 791 SECTION 3 FOR DIRECTIONS)
 ------------------------------------------------------------------------------------------------------------------------
-CTFD CHALLENGES - 
+CTFD CHALLENGES -Networking - 2 - Socket Creation and Packet Manipulation
+Gorgas Socket Manipulation (GPM)
+XX OCT 2023
+Start Time: 1300
+Duration: 4 hours
+Type of Operation: Socket Programming for Datagram, IP, TCP
+Objective: Gorgas Cyber Forces are preparing for an upcoming mission and have requested assistance with packet manipulation. They need to send custom message to allied forces throughout the region; however, they currently do not have anyone available that understands how. Using Python your team is required to complete each of the following tasks (Specific details for each task are identified in the challenge):
+Scheme of Maneuver:
+> Linux Workstations:
+→ T1: INTERNET_HOST
+-→ T2: BLUE_DMZ_Host
+Target Section:
+T1
+  Hostname: INTERNET_HOST
+  IP: PROVIDED FLOAT IP
+  OS: Linux
+  Creds: PROVIDED CREDENTIALS
+  Last Known SSH Port: 22
+  PSP: none
+  Malware: none
+  Action: Send a Datagram Socket Message to this host
+T2
+  Hostname: BLUE_DMZ_Host-1
+  IP: 172.16.1.15
+  OS: unknown
+  Creds:unknown
+  Last Known SSH Port: unknown
+  PSP: Unknown
+  Malware: Unknown
+  Action: Send a Stream Socket Message to this host
+---
+AddressFamilies 5 Level I Challenge
+What are the 3 Address Families associated with the python3 socket module?
+  ANSWER: AF_INET (the default), AF_INET6 , AF_UNIX
+Connections 5 Level I Challenge
+What are the two socket functions called to open a connection and to disconnect from that connection?
+  ANSWER: socket.connect(), socket.close()
+Header Preparation 5 Level I Challenge
+What python3 library function is utilized to combine the various pieces of your raw socket packet into network order?
+  ANSWER: struct.pack
+Missing Data 5 Level I Challenge
+What must be manually created with raw sockets that stream and datagram sockets creates for you?
+  ANSWER: header
+Sending UDP 5
+Level I Challenge
+What function within the socket module allows you to Send data to a socket, while not already being connected to a remote socket?
+  ANSWER: socket.sendto()
+Transport Layer Sockets 5 Level I Challenge
+Provide an example of the two required items needed to be set in order to send a Datagram or Stream socket? (excluding any of the socket.socket functions)
+  ANSWER: ip port
+Objects 5 Level I Challenge
+When sending data across a connection, what must a string be converted to before being sent due to encoding?
+  ANSWER: bytes-like object
+Stream Socket Message Sender 10 Level II Challenge
+Gorgan Forces have requested you get a message to one of their remote teams that are utilizing the BLUE_DMZ_HOST-1. Utilizing the criteria they provided, generate a stream socket with python3:
+Coded information was placed into the video below. Look at the note the woman passes to the man. https://youtu.be/6WTdTwcmxyo?t=35
+From your INTERNET-HOST to the BLUE_DMZ_HOST-1 Port number = #Last four digits on the note Message = #Name on the note (First letter capitalized)
+  ANSWER:
+Datagram Socket Message Sender 10 Level II Challenge
+Gorgan Forces have requested you get a message to one of their remote teams that are utilizing the INTERNET_HOST. Utilizing the criteria they provided, generate a datagram socket with python3:
+Coded information was placed into the video below. Listen to the words in the video. https://youtu.be/OuK4OcMUGcg?t=67
+Send to your INTERNET-HOST localhost. Port number = #The number of fists Message = #The name of the band (First letter capitalized)
+  ANSWER:
+Raw IPv4 TCP Sockets 15
+Level III Challenge
+Gorgan forces, tool development cell have provided RAWSOCK2.py for your teams use, it defines the basic structure of the desired result.
+Create a raw socket and code your message into the socket When viewing in Wireshark, the packet should not be malformed
+Target IP: 172.16.40.10
+IP ID: 2020
+TCP Src port: 54321
+TCP Dst port: 1234
+SEQ Number: 90210
+ACK Number: 30905
+TCP flag: SYN
+The flag will be provided by the Mission Command once you complete the activity. Provide the Wireshark Packet Capture.
+  ANSWER:
