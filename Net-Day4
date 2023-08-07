@@ -205,7 +205,7 @@ Stream Socket Message Sender 10 Level II Challenge
 Gorgan Forces have requested you get a message to one of their remote teams that are utilizing the BLUE_DMZ_HOST-1. Utilizing the criteria they provided, generate a stream socket with python3:
 Coded information was placed into the video below. Look at the note the woman passes to the man. https://youtu.be/6WTdTwcmxyo?t=35
 From your INTERNET-HOST to the BLUE_DMZ_HOST-1 Port number = #Last four digits on the note Message = #Name on the note (First letter capitalized)
-  ANSWER:
+  ANSWER: f8fa738ae384ee76751805dd6829061b
 Datagram Socket Message Sender 10 Level II Challenge
 Gorgan Forces have requested you get a message to one of their remote teams that are utilizing the INTERNET_HOST. Utilizing the criteria they provided, generate a datagram socket with python3:
 Coded information was placed into the video below. Listen to the words in the video. https://youtu.be/OuK4OcMUGcg?t=67
