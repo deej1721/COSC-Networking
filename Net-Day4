@@ -176,7 +176,7 @@ T2
   Creds:unknown
   Last Known SSH Port: unknown
   PSP: Unknown
-  Malware: Unknown
+  Malware: Unknown54321
   Action: Send a Stream Socket Message to this host
 ---
 AddressFamilies 5 Level I Challenge
@@ -210,7 +210,7 @@ Datagram Socket Message Sender 10 Level II Challenge
 Gorgan Forces have requested you get a message to one of their remote teams that are utilizing the INTERNET_HOST. Utilizing the criteria they provided, generate a datagram socket with python3:
 Coded information was placed into the video below. Listen to the words in the video. https://youtu.be/OuK4OcMUGcg?t=67
 Send to your INTERNET-HOST localhost. Port number = #The number of fists Message = #The name of the band (First letter capitalized)
-  ANSWER:
+  ANSWER: c474ddb8e189a2b316a8078e74e7be80
 Raw IPv4 TCP Sockets 15
 Level III Challenge
 Gorgan forces, tool development cell have provided RAWSOCK2.py for your teams use, it defines the basic structure of the desired result.
