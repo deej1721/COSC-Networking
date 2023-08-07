@@ -93,7 +93,7 @@ cp rawsock.py tcpsock.py
 vim tcpsock.py
   #DIRECTLY BELOW import sys IS AS FOLLOWS:
   import array
-  #BETWEEN ipHeader AND message IS AS FOLLOWS:
+  #AFTER ipHeader (DELETE message AND BELOW):
     tcpSrc = 54321 #SOURCE PORT
     tcpDst = 7777 #DESTINATION PORT
     tcpSeq = 454 #SEQUENCE NUMBER
@@ -119,7 +119,31 @@ vim tcpsock.py
     tcpFlags = tcpFin + (tcpSyn << 1) + (tcpRst << 2) + (tcpPsh << 3) + (tcpAck << 4) + (tcpUrg << 5) + (tcpEce << 6) + (tcpCwr << 7)
     # "!" IN PACK FORMAT STRING MEANS "NETWORK ORDER" AS SEEN BELOW:
     tcpHdr = pack('!HHLLBBHHH', tcpSrc, tcpDst, tcpSeq, tcpAckSeq, tcpOffRes, tcpFlags, tcpWin, tcpChk, tcpUrgPtr)
-  REQUIREMENTS:
+    usrData = n'Hello! Is this hidden?'
+    #PSEUDO HEADER FIELDS BELOW:
+    srcAddr = socket.inet_aton(srcIp)
+    dstAddr = socket.inet_aton(dstIp)
+    reserved = 0
+    protocol = socket.IPPROTO_TCP
+    tcpLen = len(tcpHdr) + lemn(usrData)
+    #PACK PSEUDO HEADER AND COMBINE WITH USER DATA BELOW:
+    psHdr = pack('!4s4sBBH', srcAddr, dstAddr, reserved, protocol, tcpLen)
+    psHdr = psHdr + tcpHdr + usrData
+    def checksum(data):
+      if len(data) %2 != 0:
+        data += b'\0'
+      res = sum(array.array("H",data))
+      res = (res >> 16) + (res & 0xffff) 
+      res += res >> 16
+      return (~res) & 0xffff # "~" (TILDE) CHARACTER "FLIPS THE BITS" OF WHATEVER VARIABLE ITS APPLIED TO
+      tcpChk = checksum(psHdr)
+      #PACK TCP HEADER TO FILL WITH CORRECT CHECKSUM - CHECKSUM IS NOT IN NETWORK BYTE ORDER BY DEFAULT!
+      tcpHdr = pack('!HHLLBH', tcpSrc, tcpDst, tcpSeq, tcpAckSeq, tcpOffRes, tcpFlags, tcpWin) + pack('H', tcpChk) + pack('!H', tcpUrgPtr)
+      #COMBINE ALL HEADERS AND USER DATA BELOW:
+      packet = ipHdr + tcpHdr + usrData
+      #SEND THE PACKET BELOW!
+      s.sendto(packet, (dstIp, 0))
+REQUIREMENTS:
     - MUST INCLUDE IP AND FOLLOW ON HEADERS
     - REQUIRES GUIDANCE FROM "REQUEST FOR COMMENTS" RFC TO FOLLOW HEADER STRUCTURE PROPERLY (SEE RFC 791 SECTION 3 FOR DIRECTIONS)
 ------------------------------------------------------------------------------------------------------------------------
