@@ -25,6 +25,39 @@ SOCKET CREATION IN PYTHON3:
       TYPE: SOCK_STREAM (DEFAULT), SOCK_DGRAM, SOCK_RAW
       PROTO: 0 (DEFAULT), IPPROTO_RAW
   DEMO:
+    vim stream.py
+      #import socket
+      #socket.function() SYNTAX
+      #CREATE REFERENCEABLE LIBRARY ALIAS WITH: from socket as sock (from LIBRARY as ALIAS)
+      #REFERENCE ONE FUNCTION IN LIBRARY WITHOUT IMPORTING THE WHOLE THING:
+        #from socket import FUNCTION
+        #function()
+      #USE JUST FUNCTION NAMES RATHER THAN LIBRARY.FUNCTION REFERENCE SCHEME:
+        from socket import * 
+        function()
+        functionEtc()
+      import socket
+      s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) CREATES SOCKET s WITH MOST SPECIFIC SYNTAX
+      s = socket.socket CREATES SOCKET s USING DEFAULT CONSTANTS, SHORTER SYNTAX!
+      ip = '127.0.0.1'
+      port = 12345
+      s.connect((ip, port))
+      #PREFIX b TO STRING SENDS IT AS A BYTES-LIKE OBJECT. \n FOR NEWLINE
+      s.send(b'Hello\n')
+      #recvfrom BUFFERSIZE SHOULD BE POWER OF 2 AND NOT "TOO BIG"
+      response, conn = s.recvfrom(1024)
+      #BYTES-LIKE OBJECTS MUST BE DECODED INTO UTF-8 (DEFAULT)
+      print.response.decode()
+      s.close()
+  DATAGRAM SOCKET DEMO:
+    vim dgram.py
+    import socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    ip = '127.0.0.1'
+    port = 12345
+    s.sendto(b'Hello\n', (ip,port))
+    response, conn = s.recvfrom(1024)
+    print(response.decode())
 RAW IPV4 SOCKETS:
   REQUIREMENTS:
     - MUST INCLUDE IP AND FOLLOW ON HEADERS
