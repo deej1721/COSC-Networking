@@ -58,10 +58,39 @@ SOCKET CREATION IN PYTHON3:
     s.sendto(b'Hello\n', (ip,port))
     response, conn = s.recvfrom(1024)
     print(response.decode())
+  RAW SOCKET DEMO:
+  vim rawsock.py
+    import socket FPR SOCKET BUILDING
+    import sys FOR SYSTEM LEVEL COMMANDS
+    from struct import * FOR PACKET STRUCTURE ESTABLISHMENT (DIRECT FUNCTION AND METHOD ACCESS)
+    #CREATE RAW SOCKET BELOW:
+      try:
+        s = socket.socket(sock.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW)
+      except socket.error as msg:
+        print(msg)
+        sys.exit()
+      packet = ''
+      srcIp = "10.1.0.2"
+      dstIp = "10.3.0.2"
+      #ADD IPv4 HEADER INFO
+      ipVerIHL = 69 #0x45 IN DECIMAL (FOR VERSION AND INTERNET HEADER LENGTH)
+      ipTos = 0 #DSCP + ECN FIELD COMBO
+      ipLen = 0 #KERNEL FILLS ACTUAL PACKET LENGTH
+      ipId = 12345 #SETS PACKET IP ID 
+      ipFrag = 0 #DISABLES IP FRAGMENTATION
+      ipTtl = 64 #SETS PACKET TIME TO LIVE VALUE WHEN LEAVING MACHINE
+      ipProto = 16 #SETS CHAOS PROTOCOL. VALUES TCP(6)/UDP(17) REQUIRE ADDITIONAL HEADERS
+      ipCheck = 0 #KERNEL FILLS IN PACKET CHECKSUM
+      ipSrcAdd = socket.inet_aton(srcIp) #CONVERT SOURCE IP TO 32bit BINARY NUMBER
+      ipDstAdd = socket.inet_aton(dstIp) #CONVERT DESTINATION IP TO 32bit BINARY NUMBER
+      ipHeader = pack('!BBHHHBBH4s4s', ipVerIHL, ipTos, ipLen, ipId, ipFrag, ipTtl, ipProto, ipCheck, ipSrcAdd, ipDstAdd, ipHeader) #! LETS KERNEL KNOW DATA IS BEING SENT BIG ENDIAN, B=BYTES, H=HALF-WORD, 
+      message = b'This is a message!'
+      packet = ipHeader + message
+      #SEND THE PACKET BELOW:
+      s.sendto(packet, (dst_ip, 0))
 RAW IPV4 SOCKETS:
   REQUIREMENTS:
     - MUST INCLUDE IP AND FOLLOW ON HEADERS
     - REQUIRES GUIDANCE FROM "REQUEST FOR COMMENTS" RFC TO FOLLOW HEADER STRUCTURE PROPERLY (SEE RFC 791 SECTION 3 FOR DIRECTIONS)
-    -
 ------------------------------------------------------------------------------------------------------------------------
 CTFD CHALLENGES - 
