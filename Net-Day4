@@ -1,0 +1,34 @@
+------------------------------------------------------------------------------------------------------------------------
+NETWORKING DAY 4 LINKS:
+  STUDENT FG: https://net.cybbh.io/public/networking/latest/lesson-2-programming/fg.html
+  SLIDES: https://net.cybbh.io/-/public/-/jobs/842494/artifacts/modules/networking/slides/2-Packet_Creation_and_Socket_Programming.html
+  PYTHON REFERENCE LINKS:
+    SOCKET: https://docs.python.org/3/library/socket.html
+    STRUCT: https://docs.python.org/3/library/struct.html
+    SYS: https://docs.python.org/3/library/sys.html
+------------------------------------------------------------------------------------------------------------------------
+GENERAL NOTES
+SOCKET TYPES:
+  USER SPACE SOCKETS:
+    - MOST COMMON, CREATION DOES NOT REQUIRE ELEVATED PERMS AND TYPES ARE AS FOLLOWS:
+    STREAM SOCKET - CONNECTION ORIENTED AND SEQUENCED; METHODS FOR CONNECTION ESTABLISHMENT AND TEAR-DOWN. USED WITH TCP, SCTP, AND BLUETOOTH
+    DATAGRAM SOCKET - CONNECTIONLESS; DESIGNED FOR QUICKLY SENDING AND RECEIVING DATA. USED WITH UDP
+  KERNEL SPACE SOCKETS:
+    - DIRECT HARDWARE ACCESS ON BEHALF OF USER APP, REQUIRES ELEVATED PERMS AND ARE AS FOLLOWS:
+    RAW SOCKET - DIRECT SENDING AND RECEIVING OF IP PACKETS WITHOUT AUTOMATIC PROTOCOL-SPECIFIC FORMATTING.
+SOCKET CREATION IN PYTHON3:
+  SYNTAX:
+    import socket
+    s = socket.socket(socket.FAMILY, socket.TYPE, socket.PROTOCOL)
+    CONSTANTS:
+      FAMILY: AF_INET (DEFAULT), AF_INET6, AF_UNIX
+      TYPE: SOCK_STREAM (DEFAULT), SOCK_DGRAM, SOCK_RAW
+      PROTO: 0 (DEFAULT), IPPROTO_RAW
+  DEMO:
+RAW IPV4 SOCKETS:
+  REQUIREMENTS:
+    - MUST INCLUDE IP AND FOLLOW ON HEADERS
+    - REQUIRES GUIDANCE FROM "REQUEST FOR COMMENTS" RFC TO FOLLOW HEADER STRUCTURE PROPERLY (SEE RFC 791 SECTION 3 FOR DIRECTIONS)
+    -
+------------------------------------------------------------------------------------------------------------------------
+CTFD CHALLENGES - 
