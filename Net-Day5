@@ -29,6 +29,7 @@ ENUMERATION DEMO:
   ip a = NEW ifconfigg (DISPLAY INTERNAL IPs)
   ip n = NEW arp -a (DISPLAY ARP CACHE)
   ip r = NEW route (DISPLAY ROUTES TO OTHER NETWORKS)
+  0.0.0.0 EQUIVALENT TO ASTERISK - BOUND TO ALL INTERFACES!
 ------------------------------------------------------------------------------------------------------------------------
 CTFD CHALLENGES - Networking - 3 - Network Reconnaissance
 Network Reconnaissance – START
