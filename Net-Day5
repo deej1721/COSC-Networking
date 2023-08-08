@@ -1,0 +1,36 @@
+------------------------------------------------------------------------------------------------------------------------
+NETWORKING DAY 5 LINKS:
+  STUDENT FG: https://net.cybbh.io/public/networking/latest/lesson-3-reconnaissance/fg.html
+  STUDENT SLIDES: https://net.cybbh.io/-/public/-/jobs/842494/artifacts/modules/networking/slides/3-Network_Reconnaissance.html
+  SHODAN SEARCH ENGINE: https://www.shodan.io/
+  UNICORN SCAN GIT: https://github.com/dneufeld/unicornscan
+------------------------------------------------------------------------------------------------------------------------
+NETWORK MAPPING NOTES:
+  UTILIZE FOLLOWING AXII: 
+  ----------------------
+     *   ACTIVE  *
+  EXTERNAL * INTERNAL
+     *  PASSIVE  *
+  ----------------------
+  MOVE FROM EXERNAL, PASSIVE (RESOLVE IP AND FQDN) -> EXTERNAL, ACTIVE (GAIN ACCESS TO BOX)-> INTERNAL, PASSIVE (CONDUCT INTERNAL NETWORK SITUATIONAL AWARENESS) -> INTERNAL, ACTIVE (MONEYSHOT)
+  EXTERNAL, PASSIVE: JOB SITE LISTINGS, WEB RECON, WHOIS LISTING, DNS QUERIES, GOOGLE SEARCHES, SHODAN, ZONE TRANSFERS
+  EXTERNAL, ACTIVE: nmap AND ping SCANS
+  INTERNAL, PASSIVE: OPEN PORTS, RUNNING SERVICES, OTHER USERS, ARP CACHE, INTERFACE IPs, KNOWN ROUTES, PACKET SNIFFERS, CHECKING /etc/hosts AND/OR /etc/resolv.conf
+  INTERNAL, ACTIVE: DNS QUERIES, PING SWEEP/ARP REQUESTS
+ENUMERATION DEMO:
+  whois <FQDN> REVEALS SIGNIFICANT INFO ON THAT FQDN: NAME SERVERS
+  dig <FQDN> REVEALS RECORDS: A = IPV4, AAAA = IPV6, MX = MAIL SERVER, PTR = REVERSE DNS RECORDS, SOA = START OF AUTHORITY
+  dig axfr nsztm1.digi.ninja zonetransfer.me CONDUCTS ZONE TRANSFER AGAINST NAME SERVER nsztm1.digi.ninja
+  SCANNING STRATEGIES: REMOTE -> LOCAL, LOCAL -> REMOTE, LOCAL -> LOCAL, REMOTE -> REMOTE
+  nmap -A -T4 --min-rate 10000 -Pn <TARGET-HOST> -vvvv (CAN USE FQDNS)
+  CTRL SHIFT C, CTRL SHIFT V TO COPY PASTE IN VIM
+  netstat -ntulp GRANTS NUMERICAL PORT, TCP/UDP, LISTENING STATE, WHAT PROCESS HAS THAT PORT OPEN, HOWEV(ER, netstat IS DEPRICATED, ss
+  cat /etc/hostd AND /etc/resolv.conf FOR RELEVANT INFO
+  ip a = NEW ifconfigg (DISPLAY INTERNAL IPs)
+  ip n = NEW arp -a (DISPLAY ARP CACHE)
+  ip r = NEW route (DISPLAY ROUTES TO OTHER NETWORKS)
+------------------------------------------------------------------------------------------------------------------------
+CTFD CHALLENGES - Networking - 3 - Network Reconnaissance
+Network Reconnaissance – START
+
+
