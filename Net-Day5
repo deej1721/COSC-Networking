@@ -39,6 +39,7 @@ ENUMERATION DEMO:
   nmap -Pn
   ON VYOS ROUTER: show config TO DISPLAY ENTIRE ROUTER CONFIG
   ON VYOS ROUTER: show interface TO DISPLAY ONLY ROUTER INTERFACES, MORE GENERALLY USEFUL THAN ABOVE
+  NETCAT BANNER GRAB SYNTAX: nc -<IP> <PORT> 
 ------------------------------------------------------------------------------------------------------------------------
 CTFD CHALLENGES - Networking - 3 - Network Reconnaissance
 Network Reconnaissance – START
