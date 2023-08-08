@@ -23,6 +23,9 @@ ENUMERATION DEMO:
   dig axfr nsztm1.digi.ninja zonetransfer.me CONDUCTS ZONE TRANSFER AGAINST NAME SERVER nsztm1.digi.ninja
   SCANNING STRATEGIES: REMOTE -> LOCAL, LOCAL -> REMOTE, LOCAL -> LOCAL, REMOTE -> REMOTE
   nmap -A -T4 --min-rate 10000 -Pn <TARGET-HOST> -vvvv (CAN USE FQDNS)
+  FILTERED ONLY: nmap -Pn <NETWORK> -p 21-23,80 | egrep -v filtered
+  OPEN ONLY: nmap -Pn <NETWORK> -p 21-23,80 | egrep -v "open"
+  !!!FOR THIS CLASS: UNLESS OTHERWISE NOTED OR HINTED, ALL MACHINES WILL HAVE AT LEAST 21,22,23, OR 80 OPEN!!!
   CTRL SHIFT C, CTRL SHIFT V TO COPY PASTE IN VIM
   netstat -ntulp GRANTS NUMERICAL PORT, TCP/UDP, LISTENING STATE, WHAT PROCESS HAS THAT PORT OPEN, HOWEV(ER, netstat IS DEPRICATED, ss
   cat /etc/hostd AND /etc/resolv.conf FOR RELEVANT INFO
@@ -30,6 +33,12 @@ ENUMERATION DEMO:
   ip n = NEW arp -a (DISPLAY ARP CACHE)
   ip r = NEW route (DISPLAY ROUTES TO OTHER NETWORKS)
   0.0.0.0 EQUIVALENT TO ASTERISK - BOUND TO ALL INTERFACES!
+  6010,6011,6012 = X11 FORWARDING PORTS
+  ssh vyos@172.16.20.1 - SSH ONTO ROUTER (ALWAYS USE vyos AS USERNAME FOR THIS COURSE WHEN SSHING ONTO ROUTER)
+  for i in {1..254} ; do (pint -c 1 <NETWORK>.$i | grep "bytes from" &) ;done = PING SWEEP
+  nmap -Pn
+  ON VYOS ROUTER: show config TO DISPLAY ENTIRE ROUTER CONFIG
+  ON VYOS ROUTER: show interface TO DISPLAY ONLY ROUTER INTERFACES, MORE GENERALLY USEFUL THAN ABOVE
 ------------------------------------------------------------------------------------------------------------------------
 CTFD CHALLENGES - Networking - 3 - Network Reconnaissance
 Network Reconnaissance – START
