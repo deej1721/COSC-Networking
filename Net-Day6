@@ -169,5 +169,25 @@ SSH:
 COVERT CHANNEL NOTES:
   - METHOD OF INFORMATION OBJECT TRANSFER BETWEEN ENDPOINTS THAT SHOULD BE ILLEGAL BASED ON CURRENT POLICY
   - TUNNEL STRATEGIES EMPLOYED FOR THIS PURPOSE INCLUDE: ICMP, DNS, HTTP
+
+wire diagram 
+- every port on box
+- more for admin
+physica diagram
+- what we cover in cosc
+- map of physical devices, how routed and connected
+- admin, cyber, emphasis on interfaces and data travel
+high tier map (logical)
+- highest level, imagine zoomed out
+- ideally, map is preexisting
+- however, must be able to construct and validate map
+- typically, map made by network admin (assume poor quality)
+-maps are either for briefs or for teams, for presentation or functionality/utility
+-include services and port associations wherever relevant, and display policies allowing these to be used
+-display or be aware of policy exceptions or where they should exist but do not
+-for monitoring network traffic 
+
+
+
 ------------------------------------------------------------------------------------------------------------------------
-CTFD CHALLENGES 
+CTFD CHALLENGES - Networking - 4 - Movement and Redirection
