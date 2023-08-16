@@ -332,7 +332,19 @@ ANSWER: D
 
 
 
+IH > telnet T5
+T5 > ssh student@10.50.45.85 -R 40677:127.0.01:22 -NT
 
+
+IH > ssh -p 40677 net4_student6@127.0.0.1 -L 40633:192.168.0.40:5555 -NT
+IH > ssh -p 40633 net4_student6@127.0.0.1
+
+IH > ssh -p 40633 net4_student6@127.0.0.1 -L 40613:172.16.0.60:23 -NT
+
+telnet 127.0.0.1 40613
+172.16.0.60 > ssh net4_student6@192.168.0.40 -p 5555 -R 40623:127.0.0.1:22 -NT
+
+IH > ssh -p 40633 net4_student6@127.0.0.1 -L 40624:127.0.0.1:40623 -NT
 
 
 
